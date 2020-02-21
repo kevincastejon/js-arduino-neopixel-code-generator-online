@@ -1,3 +1,3 @@
 # arduino-neopixel-code-generator-online
 
-Simple starter app made with create-react-app
+Generate code for your neopixel strip on Arduino.

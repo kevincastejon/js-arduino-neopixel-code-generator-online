@@ -2,6 +2,7 @@
   "name": "cra-starter-app",
   "version": "0.1.0",
   "private": true,
+  "homepage":"https://kevincastejon.fr/demos/arduino-neopixel-code-generator-online/",
   "dependencies": {
     "antd": "^3.26.11",
     "color-gradient": "^0.0.4",

@@ -1,24 +1,24 @@
 {
   "files": {
-    "main.css": "/static/css/main.9cc504d9.chunk.css",
-    "main.js": "/static/js/main.02ce7b5e.chunk.js",
-    "main.js.map": "/static/js/main.02ce7b5e.chunk.js.map",
-    "runtime-main.js": "/static/js/runtime-main.b1164a0b.js",
-    "runtime-main.js.map": "/static/js/runtime-main.b1164a0b.js.map",
-    "static/css/2.5bc4965f.chunk.css": "/static/css/2.5bc4965f.chunk.css",
-    "static/js/2.c3615472.chunk.js": "/static/js/2.c3615472.chunk.js",
-    "static/js/2.c3615472.chunk.js.map": "/static/js/2.c3615472.chunk.js.map",
-    "index.html": "/index.html",
-    "precache-manifest.7d12ee342fd98ba1b7653679b3103f26.js": "/precache-manifest.7d12ee342fd98ba1b7653679b3103f26.js",
-    "service-worker.js": "/service-worker.js",
-    "static/css/2.5bc4965f.chunk.css.map": "/static/css/2.5bc4965f.chunk.css.map",
-    "static/css/main.9cc504d9.chunk.css.map": "/static/css/main.9cc504d9.chunk.css.map"
+    "main.css": "/demos/arduino-neopixel-code-generator-online/static/css/main.9cc504d9.chunk.css",
+    "main.js": "/demos/arduino-neopixel-code-generator-online/static/js/main.66771ce7.chunk.js",
+    "main.js.map": "/demos/arduino-neopixel-code-generator-online/static/js/main.66771ce7.chunk.js.map",
+    "runtime-main.js": "/demos/arduino-neopixel-code-generator-online/static/js/runtime-main.c312fe3a.js",
+    "runtime-main.js.map": "/demos/arduino-neopixel-code-generator-online/static/js/runtime-main.c312fe3a.js.map",
+    "static/css/2.5bc4965f.chunk.css": "/demos/arduino-neopixel-code-generator-online/static/css/2.5bc4965f.chunk.css",
+    "static/js/2.913214e1.chunk.js": "/demos/arduino-neopixel-code-generator-online/static/js/2.913214e1.chunk.js",
+    "static/js/2.913214e1.chunk.js.map": "/demos/arduino-neopixel-code-generator-online/static/js/2.913214e1.chunk.js.map",
+    "index.html": "/demos/arduino-neopixel-code-generator-online/index.html",
+    "precache-manifest.5ddea5086c987f0c796b3a7075d9cd02.js": "/demos/arduino-neopixel-code-generator-online/precache-manifest.5ddea5086c987f0c796b3a7075d9cd02.js",
+    "service-worker.js": "/demos/arduino-neopixel-code-generator-online/service-worker.js",
+    "static/css/2.5bc4965f.chunk.css.map": "/demos/arduino-neopixel-code-generator-online/static/css/2.5bc4965f.chunk.css.map",
+    "static/css/main.9cc504d9.chunk.css.map": "/demos/arduino-neopixel-code-generator-online/static/css/main.9cc504d9.chunk.css.map"
   },
   "entrypoints": [
-    "static/js/runtime-main.b1164a0b.js",
+    "static/js/runtime-main.c312fe3a.js",
     "static/css/2.5bc4965f.chunk.css",
-    "static/js/2.c3615472.chunk.js",
+    "static/js/2.913214e1.chunk.js",
     "static/css/main.9cc504d9.chunk.css",
-    "static/js/main.02ce7b5e.chunk.js"
+    "static/js/main.66771ce7.chunk.js"
   ]
 }
