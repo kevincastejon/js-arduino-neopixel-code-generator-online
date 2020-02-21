@@ -1,0 +1,14 @@
+{
+  "extends": ["react-app", "airbnb", "plugin:jsx-a11y/recommended"],
+  "plugins": ["jsx-a11y"],
+  "rules": {
+    "react/jsx-filename-extension": [1, { "extensions": [".js"] }],
+    "no-underscore-dangle": "off",
+    "react/forbid-prop-types": "off",
+    "jsx-a11y/label-has-associated-control": "off",
+    "no-bitwise": "off",
+    "no-nested-ternary":"off",
+    "jsx-a11y/click-events-have-key-events":"off",
+    "jsx-a11y/no-static-element-interactions":"off"
+  }
+}
