@@ -1,13 +1,12 @@
 import React from 'react';
 import { PhotoshopPicker } from 'react-color';
 import {
-  InputNumber, Button, Input, Icon, notification,
+  InputNumber, Button, Input, Icon, notification, Checkbox,
 } from 'antd';
 import './App.css';
 import generate from 'color-gradient';
 
 const { TextArea } = Input;
-
 const openNotif = (type, title, message) => {
   notification[type]({
     message: title,
@@ -15,14 +14,11 @@ const openNotif = (type, title, message) => {
       message,
   });
 };
-
 const componentToHex = (c) => {
   const hex = c.toString(16);
   return hex.length === 1 ? `0${hex}` : hex;
 };
-
 const rgbToHex = (r, g, b) => `#${componentToHex(r)}${componentToHex(g)}${componentToHex(b)}`;
-
 const toArduinoString = (leds) => {
   let ret = `int colors[${leds.length}][4] = {`;
   for (let i = 0; i < leds.length; i += 1) {
@@ -32,7 +28,6 @@ const toArduinoString = (leds) => {
   ret += '};';
   return (ret);
 };
-
 const fromArduinoString = (arduinoString) => {
   let arduiAr = arduinoString.split('=')[1].trim();
   arduiAr = arduiAr.substring(0, arduiAr.length - 1).replace(/{/g, '[').replace(/}/g, ']');
@@ -45,24 +40,31 @@ const fromArduinoString = (arduinoString) => {
   });
   return (newFadePoints);
 };
-
 const getGradient = (color1, color2, segments) => {
   const col1 = color1;
   const col2 = color2;
   const colors = generate(col1, col2, segments).map((col) => col.substring(4, col.length - 1).replace(/ /g, '').split(','));
   return (colors.map((col) => col.map((c) => parseInt(c, 10))));
 };
-
-const randomHexColor = () => (rgbToHex(parseInt(Math.random() * 255, 10), parseInt(Math.random() * 255, 10), parseInt(Math.random() * 255, 10)));
+const randomHexColor = () => (rgbToHex(
+  parseInt(Math.random() * 255, 10),
+  parseInt(Math.random() * 255, 10),
+  parseInt(Math.random() * 255, 10),
+));
 
 class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       selectedLed: -1,
-      fadePoints: [{ color: randomHexColor(), id: 0 }, { color: randomHexColor(), id: parseInt(Math.random() * 8 + 2, 10) }, { color: randomHexColor(), id: parseInt(Math.random() * 20 + 10, 10) }],
+      fadePoints: [
+        { color: randomHexColor(), id: 0 },
+        { color: randomHexColor(), id: parseInt(Math.random() * 8 + 2, 10) },
+        { color: randomHexColor(), id: parseInt(Math.random() * 20 + 10, 10) },
+      ],
       tempColor: null,
       stripPin: 6,
+      reverse: false,
     };
   }
 
@@ -80,11 +82,15 @@ class App extends React.Component {
 
   render() {
     const {
-      fadePoints, selectedLed, tempColor, stripPin,
+      fadePoints, selectedLed, tempColor, stripPin, reverse,
     } = this.state;
     let grads = [];
     for (let i = 1; i < fadePoints.length; i += 1) {
-      const grad = getGradient(fadePoints[i - 1].color, fadePoints[i].color, (fadePoints[i].id - fadePoints[i - 1].id) - 1);
+      const grad = getGradient(
+        fadePoints[i - 1].color,
+        fadePoints[i].color,
+        (fadePoints[i].id - fadePoints[i - 1].id) - 1,
+      );
       if (i > 1) {
         grad.splice(0, 1);
       }
@@ -100,7 +106,9 @@ class App extends React.Component {
     });
     const selectedLedIsFadePoint = (selectedLed > -1 && ledsAr[selectedLed].fadePoint !== null);
     const isLeftSlotFree = selectedLed > 0 && ledsAr[selectedLed - 1].fadePoint === null;
-    const isRightSlotFree = selectedLed > 0 && selectedLed < ledsAr.length - 1 && ledsAr[selectedLed + 1].fadePoint === null;
+    const isRightSlotFree = selectedLed > 0
+      && selectedLed < ledsAr.length - 1
+      && ledsAr[selectedLed + 1].fadePoint === null;
     return (
       <div
         className="App"
@@ -130,7 +138,7 @@ class App extends React.Component {
                   <Button
                     style={{ marginRight: 10 }}
                     title="Shift the fade point to the left"
-                    onClick={(e) => {
+                    onClick={() => {
                       const newAr = fadePoints.concat();
                       newAr.find((elt) => elt.id === selectedLed).id = selectedLed - 1;
                       this.setState({
@@ -153,7 +161,14 @@ class App extends React.Component {
                       });
                     } else {
                       let newAr = fadePoints.concat();
-                      newAr.push({ color: rgbToHex(ledsAr[selectedLed].color[0], ledsAr[selectedLed].color[1], ledsAr[selectedLed].color[2]), id: selectedLed });
+                      newAr.push({
+                        color: rgbToHex(
+                          ledsAr[selectedLed].color[0],
+                          ledsAr[selectedLed].color[1],
+                          ledsAr[selectedLed].color[2],
+                        ),
+                        id: selectedLed,
+                      });
                       newAr = newAr.sort((a, b) => (a.id > b.id));
                       this.setState({
                         fadePoints: newAr,
@@ -236,7 +251,14 @@ leds
                   this.handleSelection(i);
                 }}
                 className="led"
-                style={{ backgroundColor: rgbToHex(led.color[0], led.color[1], led.color[2]), border: i !== selectedLed ? null : '3px solid black' }}
+                style={{
+                  backgroundColor: rgbToHex(
+                    led.color[0],
+                    led.color[1],
+                    led.color[2],
+                  ),
+                  border: i !== selectedLed ? null : '3px solid black',
+                }}
                 onClick={() => {
                   this.handleSelection(i);
                 }}
@@ -277,6 +299,15 @@ leds
                 }}
               />
             </label>
+            <br />
+            <Checkbox onChange={(e) => {
+              this.setState({
+                reverse: e.target.checked,
+              });
+            }}
+            >
+Reverse
+            </Checkbox>
             <TextArea
               style={{ marginTop: 10 }}
               value={toArduinoString(ledsAr)}
@@ -299,8 +330,10 @@ leds
                 {`
 Adafruit_NeoPixel strip = Adafruit_NeoPixel(${ledsAr.length}, ${stripPin}, NEO_GRB + NEO_KHZ800);
 strip.begin();
+int j = topStrip.numPixels()-1;
 for(uint16_t i=0; i<strip.numPixels(); i++) {
-strip.setPixelColor(i, strip.Color(colors[i][0],colors[i][1],colors[i][2]));
+strip.setPixelColor(${reverse ? 'j' : 'i'}, strip.Color(colors[i][0],colors[i][1],colors[i][2]));
+j--;
 }
 strip.show();
               `}
@@ -311,7 +344,11 @@ strip.show();
           : (
             <div className="colorPicker">
               <PhotoshopPicker
-                color={rgbToHex(ledsAr[selectedLed].color[0], ledsAr[selectedLed].color[1], ledsAr[selectedLed].color[2])}
+                color={rgbToHex(
+                  ledsAr[selectedLed].color[0],
+                  ledsAr[selectedLed].color[1],
+                  ledsAr[selectedLed].color[2],
+                )}
                 onChange={(color) => {
                   const newAr = fadePoints.concat();
                   const led = newAr.find((elt) => elt.id === selectedLed);
